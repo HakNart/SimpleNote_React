@@ -55,9 +55,9 @@ export const retrieveAllNotes = (username) => {
 }
 
 export const createNewNote = (username, data) => {
-    console.log("New Note created: ");
-    console.log("Username:" + username);
-    console.log(data);
+    // console.log("New Note created: ");
+    // console.log("Username:" + username);
+    // console.log(data);
     return apiClient.apiFetch(`/users/${username}/notes`, {
         method: "POST",
         headers: {
@@ -76,8 +76,7 @@ export const createNewNote = (username, data) => {
 }
 
 export const updateNoteApi= (username,id, data) => {
-    console.log("Note updated");
-    console.log(data);
+
     return apiClient.apiFetch(`/users/${username}/notes/${id}`, {
         method: "PUT",
         headers: {

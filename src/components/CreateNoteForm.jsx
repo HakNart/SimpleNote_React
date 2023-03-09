@@ -9,7 +9,7 @@ export function CreateNoteForm({submitNote, onNewNoteCreate}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const {refreshNotes} = useContext(NoteContext);
+  // const {refreshNotes} = useContext(NoteContext);
   const authContext = useAuth();
 
   const toggleForm = (e) => {
@@ -32,7 +32,7 @@ export function CreateNoteForm({submitNote, onNewNoteCreate}) {
 
   const onNoteCreate = (e) => {
     e.preventDefault();
-    console.log(refreshNotes);
+    // console.log(refreshNotes);
     const note = {
       title: title,
       type: 'text',

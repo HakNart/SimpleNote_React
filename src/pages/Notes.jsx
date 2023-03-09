@@ -19,6 +19,7 @@ export default function Notes() {
       // Set notes in reverse order
       setNotes([...data].reverse());
     })
+    
     setUpdated(false);
   },[isUpdated])
   
@@ -33,11 +34,12 @@ export default function Notes() {
     updateNoteApi(userName,id, note)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Sucess:", data)
+        // console.log("Sucess:", data)
       })
       .catch(err => {
-        console.log('Error:', err);
-      })
+        // console.log('Error:', err);
+      });
+    setUpdated(true);
   }
   const onNoteDelete = (id) => {
     deleteNoteApi(userName,id)
@@ -63,7 +65,7 @@ export default function Notes() {
       })
   }
   return (
-    <NoteContext.Provider value={{}}>
+    // <NoteContext.Provider value={{}}>
       <div className='note-app'>
         <CreateNoteForm submitNote={()=>refreshNotes()} onNewNoteCreate={onNewNoteCreate}/>
         <div className='notes grid sm grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-5 relative mx-auto my-12 ' >
@@ -75,7 +77,7 @@ export default function Notes() {
         
 
       </div>
-    </NoteContext.Provider>
+    // </NoteContext.Provider>
     
   )
 }
