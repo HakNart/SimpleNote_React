@@ -2,7 +2,7 @@ import DeleteOutlineOutlinedIcon  from '@mui/icons-material/DeleteOutlineOutline
 import { Card, CardContent, CardHeader, IconButton, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
 import React from 'react'
 
-export default function TextCard({note}) {
+export default function ErrorPage() {
   return (
     <Card>
       <CardHeader
