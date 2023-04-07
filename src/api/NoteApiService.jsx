@@ -2,39 +2,40 @@
 // const baseUrl = "http://localhost:8081";
 
 import { json } from "react-router-dom";
+import { customApiClient } from "./customApiClient";
 
 // const baseUrl = "http://localhost:8080";
-function customApiClient(){
-    this.baseUrl = '',
-    this.apiConfig = {
-        headers: {},
-    },
-    this.apiFetch = async(...args) => {
-        let [resource, config] = args;
-        resource = this.baseUrl + resource;
-        // Add custom config present in this api client
-        Object.keys(this.apiConfig).forEach(key => {
-            if (key === "headers") {
-                Object.keys(this.apiConfig.headers).forEach(key => {
-                    config["headers"] = {...config["headers"]};
-                    config["headers"][key] = this.apiConfig.headers[key];
-                })
-            } else {
-                config[key] = this.apiConfig[key];
-            }
+// function customApiClient(){
+//     this.baseUrl = '',
+//     this.apiConfig = {
+//         headers: {},
+//     },
+//     this.apiFetch = async(...args) => {
+//         let [resource, config] = args;
+//         resource = this.baseUrl + resource;
+//         // Add custom config present in this api client
+//         Object.keys(this.apiConfig).forEach(key => {
+//             if (key === "headers") {
+//                 Object.keys(this.apiConfig.headers).forEach(key => {
+//                     config["headers"] = {...config["headers"]};
+//                     config["headers"][key] = this.apiConfig.headers[key];
+//                 })
+//             } else {
+//                 config[key] = this.apiConfig[key];
+//             }
             
-        });
-        let response = await fetch(resource,config);
-        if (!response.ok && response.status === 404) {
-            return Promise.reject(response);
-        }
-        return response
-    }  
-}
+//         });
+//         let response = await fetch(resource,config);
+//         if (!response.ok && response.status === 404) {
+//             return Promise.reject(response);
+//         }
+//         return response
+//     }  
+// }
 
-export const apiClient = new customApiClient();
-apiClient.baseUrl = 'http://localhost:8080'
-
+// export const apiClient = new customApiClient();
+// apiClient.baseUrl = 'http://localhost:8080'
+const apiClient = customApiClient("http://localhost:8080")
 
 export const excecuteBasicAuthentication = (token) => {
     return fetch(`http://localhost:8080/basicauth`, {
@@ -49,9 +50,7 @@ export const excecuteBasicAuthentication = (token) => {
 
 export const retrieveAllNotes = (username) => {
     // return fetchAbsolute("/notes");
-    return apiClient.apiFetch(`/users/${username}/notes`, {
-        method: "GET",
-    })
+    return apiClient.request(`/users/${username}/notes`)
 }
 
 export const createNewNote = (username, data) => {
