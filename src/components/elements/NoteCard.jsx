@@ -2,24 +2,26 @@ import React, { useState } from "react";
 import { TextNote } from "./TextNote";
 import { CheckList } from "./CheckList";
 
-export const NoteCard = () => {
+export const NoteCard = ({note}) => {
   const [isOpenModal, setOpenModal] = useState(false);
-  console.log(isOpenModal);
   return (
     <div>
       <div
         onClick={() => setOpenModal(true)}
         className="flex flex-col justify-center  rounded-xl border-2 border-gray-300 bg-gray-100 p-5 hover:bg-gray-300"
       >
-        {/* <TextNote/> */}
-        <CheckList />
+
+        { note.type === 'text' ? <TextNote note={note}/>
+          : note.type === 'checklist'? <CheckList note={note}/>
+          : null}
+
       </div>
       {isOpenModal && (
         <Modal
           isOpenModal={isOpenModal}
           onClose={() => {
             setOpenModal(false);
-            console.log("Onclose fired");
+            
           }}
         />
       )}
