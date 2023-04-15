@@ -42,7 +42,7 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
           <textarea className='bg-transparent resize-none w-full h-full  leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} ref={textAreaRef}>{content}</textarea>
         </div>
         <div className='flex justify-end'>
-          <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleNoteUpdate}>Update</button>
+          <button type="button" class="text-white bg-cyan-600 hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleNoteUpdate}>Update</button>
         </div>
       
         </form>
