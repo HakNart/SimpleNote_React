@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui"), require('flowbite/plugin')],
+  plugins: [],
   daisyui: {
     themes: ["autumn", "dracula", "cupcake",],
     darkTheme: "dracula",
