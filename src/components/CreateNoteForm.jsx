@@ -1,20 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {AiOutlinePlus} from 'react-icons/ai'
 
 export const CreateNoteForm = () => {
   // const [type, setType] = useState('text')
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const textAreaRef = useRef();
   // function handleNoteTypeToggle() {
   //   type === 'text' ? setType('checklist'): setType('text')
   // }
+
+  function resizeTextArea() {
+    textAreaRef.current.style.height = 'auto';
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
+  }
+
+  useEffect(resizeTextArea, [content])
 
   function handleTitleChange(e) {
     setTitle(e.target.value);
   }
 
-  function handleContentChange() {
+  function handleContentChange(e) {
     setContent(e.target.value);
   }
   return (
@@ -35,13 +42,12 @@ export const CreateNoteForm = () => {
         </div>
         {/* Text area */}
         <div className='flex-auto'>
-          <textarea className='bg-transparent w-full h-full resize-none leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden' onChange={handleContentChange} placeholder='Type your note...'>{content}</textarea>
+          <textarea className='bg-transparent w-full h-full resize-none leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} placeholder='Type your note...' ref={textAreaRef}>{content}</textarea>
         </div>
         <div className='flex justify-end'>
           <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2">Save</button>
         </div>
-       
-
+      
         </form>
     </div>
   )
