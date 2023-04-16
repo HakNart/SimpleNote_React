@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import {BsFillTrash3Fill} from 'react-icons/bs'
 
 export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) => {
   if (!isOpenModal) {
@@ -27,6 +28,10 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
   function handleContentChange(e) {
     setContent(e.target.value);
   }
+  // TDOO: delete note logic
+  function handleNoteDelete() {
+    onClose();
+  }
   return (
     <div class="modal fixed top-0 left-0 right-0 z-50 h-[calc(100%-1rem)] w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full bg-slate-800/50">
 
@@ -41,7 +46,12 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
         <div className='flex-auto'>
           <textarea className='bg-transparent resize-none w-full h-full  leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} ref={textAreaRef}>{content}</textarea>
         </div>
-        <div className='flex justify-end'>
+        <div className='flex justify-between'>
+            <button type="button" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-3 py-2.5 text-center inline-flex items-center mr-2"
+              onClick={handleNoteDelete}
+            >
+              <BsFillTrash3Fill/>
+            </button>
           <button type="button" class="text-white bg-cyan-600 hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleNoteUpdate}>Update</button>
         </div>
       
