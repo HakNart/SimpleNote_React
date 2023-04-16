@@ -4,7 +4,6 @@ import { CheckList } from "./CheckList";
 import { EditNoteModal } from "../EditNoteModal";
 
 export const NoteCard = ({note, setOpenModal, setSelectedNote}) => {
-  // const [isOpenModal, setOpenModal] = useState(false);
   function handleNoteSelect() {
     setOpenModal(true);
     setSelectedNote(note);
@@ -13,38 +12,16 @@ export const NoteCard = ({note, setOpenModal, setSelectedNote}) => {
     <div>
       <div
         onClick={handleNoteSelect}
-        className="flex flex-col justify-center  rounded-xl border-2 border-gray-300 bg-gray-100 p-5 hover:bg-gray-300"
+        className="flex flex-col justify-start  rounded-xl border-2 border-gray-300 bg-gray-100 p-5 hover:bg-gray-300"
       >
       <TextNote note={note} />
       </div>
     </div>
+
+
   );
 };
-function Modal({ isOpenModal, onClose }) {
-  return (
-    <div class="fixed top-0 left-0 right-0 z-50 h-[calc(100%-1rem)] w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full">
-      <div class="relative mx-auto h-full w-full max-w-2xl md:h-auto">
-        <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-          <div class="flex items-start justify-between rounded-t border-b p-4 dark:border-gray-600">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-              Terms of Service
-            </h3>
-          </div>
 
-          <div class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600">
-            <button
-              onClick={onClose}
-              type="button"
-              class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              I accept
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // function Modal({data}) {
 //   return (

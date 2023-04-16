@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {BsFillTrash3Fill} from 'react-icons/bs'
+import { useNote } from '../context/NoteContext';
 
 export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) => {
   if (!isOpenModal) {
     return null;
   }
+  const {notes ,setNotes} = useNote();
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
   const textAreaRef = useRef();
@@ -16,8 +18,32 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
 
   useEffect(resizeTextArea, [content])
 
-  function handleNoteUpdate(e) {
+  async function handleNoteUpdate(e) {
     e.preventDefault();
+    const updateNote = {
+      id: note.id,
+      title: title,
+      content: content,
+      type: 'text',
+    }
+    const requestOptions = {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(updateNote)
+    }
+    const response = await fetch(`http://localhost:8080/users/23/notes/${updateNote.id}`, requestOptions);
+    const data = await response.json();
+    setContent("");
+    setTitle("");
+    const updatedNotes = notes.map(note => {
+      if (note.id === updateNote.id) {
+        return {...note, title: updateNote.title, content: updateNote.content};
+      } else {
+        return note;
+      }
+    })
+
+    setNotes(updatedNotes);
     onClose();
     setSelectedNote(null);
   }
@@ -29,7 +55,16 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
     setContent(e.target.value);
   }
   // TDOO: delete note logic
-  function handleNoteDelete() {
+  async function handleNoteDelete(e) {
+    e.preventDefault();
+    const toDeleteNote = note; 
+    const requestOptions = {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(note)
+    }
+    const response = await fetch(`http://localhost:8080/users/23/notes/${toDeleteNote.id}`, requestOptions);
+    setNotes(notes.filter(note => note.id !== toDeleteNote.id));
     onClose();
   }
   return (
@@ -44,7 +79,7 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
         </div>
         {/* Text area */}
         <div className='flex-auto'>
-          <textarea className='bg-transparent resize-none w-full h-full  leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} ref={textAreaRef}>{content}</textarea>
+          <textarea className='bg-transparent resize-none w-full h-full  leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} ref={textAreaRef} value={content} />
         </div>
         <div className='flex justify-between'>
             <button type="button" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-3 py-2.5 text-center inline-flex items-center mr-2"

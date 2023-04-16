@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {AiOutlinePlus} from 'react-icons/ai'
+import { useNote } from '../context/NoteContext';
 
 export const CreateNoteForm = () => {
-  // const [type, setType] = useState('text')
+
+  const {notes, setNotes} = useNote();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isExpanded, setExpanded] = useState(false);
   const textAreaRef = useRef();
-  // function handleNoteTypeToggle() {
-  //   type === 'text' ? setType('checklist'): setType('text')
-  // }
+
 
   function resizeTextArea() {
     textAreaRef.current.style.height = 'auto';
@@ -22,7 +23,29 @@ export const CreateNoteForm = () => {
   }
 
   function handleContentChange(e) {
+    setExpanded(true);
     setContent(e.target.value);
+  }
+
+  const handleCreateNote = async (e) => {
+    e.preventDefault();
+    setExpanded(false);
+    const newNote = {
+      title: title,
+      content: content,
+      type: 'text',
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(newNote)
+    }
+    const response = await fetch(`http://localhost:8080/users/23/notes`, requestOptions);
+    const data = await response.json();
+    setContent("");
+    setTitle("");
+    setNotes([data,...notes]);
+
   }
   return (
     <div class="flex flex-col create-form mx-auto my-5 max-w-lg min-h-[14rem] h-auto bg-gray-100 p-2 rounded-xl border-2 border-gray-300">
@@ -42,12 +65,12 @@ export const CreateNoteForm = () => {
         </div>
         {/* Text area */}
         <div className='flex-auto'>
-          <textarea className='bg-transparent w-full h-full resize-none leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} placeholder='Type your note...' ref={textAreaRef}>{content}</textarea>
+          <textarea className='bg-transparent w-full h-full resize-none leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} placeholder='Type your note...' ref={textAreaRef} value={content} />
         </div>
-        <div className='flex justify-end'>
-          <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2">Save</button>
+        {isExpanded && <div className='flex justify-end'>
+          <button class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleCreateNote}>Save</button>
         </div>
-      
+        }
         </form>
     </div>
   )
