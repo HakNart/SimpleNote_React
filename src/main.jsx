@@ -8,9 +8,9 @@ import { NotesProvider } from './context/NoteContext'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <NotesProvider>
+
         <App />
-      </NotesProvider>
+
     </BrowserRouter>
 
   </React.StrictMode>,

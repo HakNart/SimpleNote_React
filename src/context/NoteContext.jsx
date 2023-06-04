@@ -2,6 +2,8 @@ import React, {createContext, useContext, useState } from 'react'
 
 const NoteContext = createContext();
 
+
+
 export const NotesProvider = ({children}) => {
   const [notes, setNotes] = useState([]);
 

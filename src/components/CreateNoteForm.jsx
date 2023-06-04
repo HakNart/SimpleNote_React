@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {AiOutlinePlus} from 'react-icons/ai'
 import { useNote } from '../context/NoteContext';
+import { createNoteApi } from '../api/CRUDApiService';
 
-export const CreateNoteForm = () => {
+export const CreateNoteForm = ({refreshNotes}) => {
 
   const {notes, setNotes} = useNote();
   const [title, setTitle] = useState("");
@@ -35,29 +35,19 @@ export const CreateNoteForm = () => {
       content: content,
       type: 'text',
     }
-    const requestOptions = {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(newNote)
-    }
-    const response = await fetch(`http://localhost:8080/users/23/notes`, requestOptions);
-    const data = await response.json();
-    setContent("");
-    setTitle("");
-    setNotes([data,...notes]);
-
+    createNoteApi(newNote)
+    .then(response => {
+      setContent("");
+      setTitle("");
+      refreshNotes();
+      // setNotes([newNote,...notes]);
+    })
+    .catch(err => console.log(err))
+  
   }
   return (
-    <div class="flex flex-col create-form mx-auto my-5 max-w-lg min-h-[14rem] h-auto bg-gray-100 p-2 rounded-xl border-2 border-gray-300">
+    <div className="flex flex-col create-form mx-auto my-5 max-w-lg min-h-[14rem] h-auto bg-gray-100 p-2 rounded-xl border-2 border-gray-300">
       <form className='flex flex-col justify-between grow'>
-        {/* Toggle type */}
-        {/* <div>
-        <label className='relative inline-flex items-center mb-5 cursor-pointer'>
-          <input onChange={handleNoteTypeToggle} type='checkbox' className='sr-only peer'/>
-          <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all  peer-checked:bg-blue-600"></div>
-          <span class="ml-3 text-sm font-medium text-gray-900 ">{type==='text'? "Text": "CheckBox"}</span>
-        </label>
-        </div> */}
         
         {/* Title */}
         <div className="w-full mb-3 flex-none">

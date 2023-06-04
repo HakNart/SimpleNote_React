@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {BsFillTrash3Fill} from 'react-icons/bs'
 import { useNote } from '../context/NoteContext';
+import { deleteNoteApi, updatedNoteApi } from '../api/CRUDApiService';
 
 export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) => {
   if (!isOpenModal) {
@@ -31,10 +32,15 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(updateNote)
     }
-    const response = await fetch(`http://localhost:8080/users/23/notes/${updateNote.id}`, requestOptions);
-    const data = await response.json();
-    setContent("");
-    setTitle("");
+    // const response = await fetch(`http://localhost:8080/users/23/notes/${updateNote.id}`, requestOptions);
+    // const data = await response.json();
+    updatedNoteApi(note.id, updateNote)
+    .then(response => {
+      setContent("");
+      setTitle("");
+    })
+    .catch(err => console.log(err))
+
     const updatedNotes = notes.map(note => {
       if (note.id === updateNote.id) {
         return {...note, title: updateNote.title, content: updateNote.content};
@@ -58,13 +64,12 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
   async function handleNoteDelete(e) {
     e.preventDefault();
     const toDeleteNote = note; 
-    const requestOptions = {
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(note)
-    }
-    const response = await fetch(`http://localhost:8080/users/23/notes/${toDeleteNote.id}`, requestOptions);
-    setNotes(notes.filter(note => note.id !== toDeleteNote.id));
+    console.log(toDeleteNote);
+    deleteNoteApi(note.id)
+    .then(response => {
+      setNotes(notes.filter(note => note.id !== toDeleteNote.id));
+    })
+    .catch(err => console.log(err))
     onClose();
   }
   return (

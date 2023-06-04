@@ -2,22 +2,33 @@ import React, { useEffect, useState } from 'react'
 import { NoteCard } from './elements/NoteCard'
 import { useNote } from '../context/NoteContext'
 import { EditNoteModal } from './EditNoteModal';
+import { useAuth } from '../context/AuthenticationContext';
+import { useNavigate } from 'react-router-dom';
+import { getAllNotesFromUsernameApi } from '../api/CRUDApiService';
 
-export const NoteList = () => {
+
+
+export const NoteList = ({refreshNotes}) => {
   const { notes, setNotes} = useNote();
   const [isOpenModal, setOpenModal] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
-  console.log("Note List renderd")
-  useEffect(() => {
-    async function fetchNotes() {
-      // const response = await fetch(`http://localhost:3004/notes`);
-      console.log("Notes fetched form db")
-      const response = await fetch(`http://localhost:8080/users/23/notes`);
-      const data = await response.json();
-      setNotes(data);
-    }
-    fetchNotes();
-  },[])
+
+  const authContext = useAuth();
+  const username = authContext.username;
+  const navigate = useNavigate();
+
+  useEffect(() => refreshNotes(), [])
+
+  function refreshNotes() {
+    getAllNotesFromUsernameApi()
+    .then(response => {
+      setNotes(response.data)
+      console.log("Note List rendered")
+    })
+    .catch(error => console.log(error))
+  }
+  
+
 
 
   return (
