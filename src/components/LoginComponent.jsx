@@ -29,7 +29,7 @@ export default function LoginComponent() {
       }
   }
   return (
-    <div className='login'>
+    <main className='login'>
       <h1>Time to Login!</h1>
             {showErrorMessage && <div className="errorMessage">Authentication Failed. 
                                                             Please check your credentials.</div>}
@@ -46,6 +46,6 @@ export default function LoginComponent() {
                     <button type="button" name="login" onClick={handleSubmit}>login</button>
                 </div>
             </div>
-    </div>
+    </main>
   )
 }

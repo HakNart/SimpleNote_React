@@ -1,13 +1,18 @@
 import React from 'react'
 import logo from '../assets/logo.svg'
+import { useAuth } from '../context/AuthenticationContext'
 
 export function Header() {
+  const authContext = useAuth()
+  function handleLogout() {
+    authContext.logout()
+  }
   return (
     <header>
       
 <nav className="bg-white border-gray-200 ">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="#" className="flex items-center">
+    <a href="/" className="flex items-center">
         <img src={logo} className="h-8 mr-3" alt="Flowbite Logo" />
         <span className="self-center text-2xl font-semibold whitespace-nowrap">Simple Note</span>
     </a>
@@ -29,7 +34,7 @@ export function Header() {
         <li>
           <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 t">Pricing</a>
         </li> */}
-        <li>
+        <li onClick={handleLogout}>
           <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Log out</a>
         </li>
       </ul>

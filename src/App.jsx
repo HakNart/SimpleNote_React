@@ -47,9 +47,7 @@ function App() {
     //   </BrowserRouter>
     // </AuthProvide>
     <div className="App">
-    <Header/>
     <AllRoutes/>
-    <Footer/>
     </div>
 
 
