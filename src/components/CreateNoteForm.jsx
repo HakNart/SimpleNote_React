@@ -58,7 +58,7 @@ export const CreateNoteForm = ({refreshNotes}) => {
           <textarea className='bg-transparent w-full h-full resize-none leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} placeholder='Type your note...' ref={textAreaRef} value={content} />
         </div>
         {isExpanded && <div className='flex justify-end'>
-          <button class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleCreateNote}>Save</button>
+          <button className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleCreateNote}>Save</button>
         </div>
         }
         </form>

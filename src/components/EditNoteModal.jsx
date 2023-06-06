@@ -73,9 +73,9 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
     onClose();
   }
   return (
-    <div class="modal fixed top-0 left-0 right-0 z-50 h-[calc(100%-1rem)] w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full bg-slate-800/50">
+    <div className="modal fixed top-0 left-0 right-0 z-50 h-[calc(100%-1rem)] w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full bg-slate-800/50">
 
-      <div class="modal-content flex flex-col create-form mx-auto my-20 max-w-2xl min-h-[14rem] h-auto bg-gray-100 p-2 rounded-xl border-2 border-gray-300 z-30">
+      <div className="modal-content flex flex-col create-form mx-auto my-20 max-w-2xl min-h-[14rem] h-auto bg-gray-100 p-2 rounded-xl border-2 border-gray-300 z-30">
       <form className='flex flex-col justify-between grow' onSubmit={handleNoteUpdate}>
         
         {/* Title */}
@@ -87,12 +87,12 @@ export const EditNoteModal = ({ note, isOpenModal, onClose, setSelectedNote }) =
           <textarea className='bg-transparent resize-none w-full h-full  leading-normal border-0 border-none outline-none m-0 p-0 overflow-y-hidden max-h-96' onChange={handleContentChange} ref={textAreaRef} value={content} />
         </div>
         <div className='flex justify-between'>
-            <button type="button" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-3 py-2.5 text-center inline-flex items-center mr-2"
+            <button type="button" className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-3 py-2.5 text-center inline-flex items-center mr-2"
               onClick={handleNoteDelete}
             >
               <BsFillTrash3Fill/>
             </button>
-          <button type="button" class="text-white bg-cyan-600 hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleNoteUpdate}>Update</button>
+          <button type="button" className="text-white bg-cyan-600 hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2" onClick={handleNoteUpdate}>Update</button>
         </div>
       
         </form>
