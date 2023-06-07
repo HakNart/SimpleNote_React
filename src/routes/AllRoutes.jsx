@@ -6,6 +6,7 @@ import LoginComponent from '../components/LoginComponent'
 import { NotesProvider } from '../context/NoteContext'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
+import SignupComponent from '../components/SignupComponent'
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth()
@@ -25,6 +26,7 @@ export default function AllRoutes() {
           <Routes>
             <Route path='/' element={<LoginComponent />} />
             <Route path='/login' element={<LoginComponent />} />
+            <Route path='/signup' element={<SignupComponent />} />
 
             <Route path='/notes' element={
               <AuthenticatedRoute>
